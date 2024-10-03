@@ -12,3 +12,11 @@ Quantitat de dies de vacances al treballador
 
 ## Variables
 
+Nom = String
+Cognom = String
+Departament = Int
+Antiguitat = Int
+
+
+## Disseny
+
