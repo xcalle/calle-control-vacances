@@ -60,11 +60,11 @@ public class Benvinguda extends JFrame {
         jcdbdepertament = new JComboBox<String>();
         jcdbdepertament .addItem("Logistica");
         jcdbdepertament.addItem("Gerencia");
-        jcdbdepertament.addItem("atencion al cliente");
+        jcdbdepertament.addItem("Atencion al cliente");
         jlEtiquetaDepertament = new JLabel("Depertament");
         radio1=new JRadioButton("1 any");
-        radio2=new JRadioButton("800*600");
-        radio3=new JRadioButton("1024*768");
+        radio2=new JRadioButton("2-6 anys");
+        radio3=new JRadioButton("+7");
 
 
 
@@ -97,18 +97,36 @@ public class Benvinguda extends JFrame {
         add(radio2);
         add(radio3);
 
+
+
         // Per afegir funcionalitat al botó: què passa quan l'usuari fa clic?
         jbAccedir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Obtenir el text que ha introduït l'usuari al camp de text.
+                // System.out.println("a");
                 String entradaNomUsuari = jtfNomUsuari.getText();
-                if (!entradaNomUsuari.isEmpty()) {
+                String entradaCognomUsuari = jtfCognomEntrat.getText();
+                String entradaDepetament = jcdbdepertament.getSelectedItem().toString();
+
+                int entradaAntiguitat;
+                if (radio1.isSelected()){
+                    entradaAntiguitat = 1;
+                } else if (radio2.isSelected()) {
+                    entradaAntiguitat = 2;
+                } else if (radio3.isSelected()){
+                    entradaAntiguitat = 3;
+                } else {
+                    entradaAntiguitat = 0;
+                }
+
+
+                if (!entradaNomUsuari.isEmpty() && !entradaCognomUsuari.isEmpty() && entradaAntiguitat != 0){
                     // Si l'usuari ha introduït un nom, obrir la finestra "Resultat" amb aquest nom.
-                    new Resultat(entradaNomUsuari);
+                    new Resultat(entradaNomUsuari, entradaCognomUsuari, entradaDepetament, entradaAntiguitat);
                 } else {
                     // Si el camp de text és buit, mostrar un missatge d'error.
                     JOptionPane.showMessageDialog(Benvinguda.this,
-                            "Si us plau, cal que introdueixis una cadena.");
+                            "Si us plau, cal que introdueixis tots els camps");
                 }
             }
         });
