@@ -25,6 +25,7 @@ public class Benvinguda extends JFrame {
     private JRadioButton radio1, radio2, radio3;
     private ButtonGroup bg;
     private JLabel jlEntiguitat;
+    private String[] departaments = {"Logistica", "Gerencia", "Atencion al cliente"};
 
 
     public Benvinguda() throws IOException {
@@ -57,10 +58,10 @@ public class Benvinguda extends JFrame {
         jtfNomUsuari = new JTextField(20);
         jlEtiquetaCognomUsuari = new JLabel("cognom:");
         jtfCognomEntrat = new JTextField(20);
-        jcdbdepertament = new JComboBox<String>();
-        jcdbdepertament .addItem("Logistica");
-        jcdbdepertament.addItem("Gerencia");
-        jcdbdepertament.addItem("atencion al cliente");
+        jcdbdepertament = new JComboBox<String>(departaments);
+//        jcdbdepertament .addItem("Logistica");
+//        jcdbdepertament.addItem("Gerencia");
+//        jcdbdepertament.addItem("atencion al cliente");
         jlEtiquetaDepertament = new JLabel("Depertament");
         radio1=new JRadioButton("1 any");
         radio2=new JRadioButton("800*600");
