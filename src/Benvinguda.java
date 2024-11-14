@@ -102,14 +102,30 @@ public class Benvinguda extends JFrame {
         jbAccedir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Obtenir el text que ha introduït l'usuari al camp de text.
+                // System.out.println("a");
                 String entradaNomUsuari = jtfNomUsuari.getText();
-                if (!entradaNomUsuari.isEmpty()) {
+                String entradaCognomUsuari = jtfCognomEntrat.getText();
+                String entradaDepetament = jcdbdepertament.getSelectedItem().toString();
+
+                int entradaAntiguitat;
+                if (radio1.isSelected()){
+                    entradaAntiguitat = 1;
+                } else if (radio2.isSelected()) {
+                    entradaAntiguitat = 2;
+                } else if (radio3.isSelected()){
+                    entradaAntiguitat = 3;
+                } else {
+                    entradaAntiguitat = 0;
+                }
+
+
+                if (!entradaNomUsuari.isEmpty() && !entradaCognomUsuari.isEmpty() && entradaAntiguitat != 0){
                     // Si l'usuari ha introduït un nom, obrir la finestra "Resultat" amb aquest nom.
-                    new Resultat(entradaNomUsuari);
+                    new Resultat(entradaNomUsuari, entradaCognomUsuari, entradaDepetament, entradaAntiguitat);
                 } else {
                     // Si el camp de text és buit, mostrar un missatge d'error.
                     JOptionPane.showMessageDialog(Benvinguda.this,
-                            "Si us plau, cal que introdueixis una cadena.");
+                            "Si us plau, cal que introdueixis tots els camps");
                 }
             }
         });
