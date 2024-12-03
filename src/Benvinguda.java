@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 
 public class Benvinguda extends JFrame {
@@ -11,7 +13,7 @@ public class Benvinguda extends JFrame {
     public static final String TITOL_FINESTRA = "Benvingut";
 
     private JTextField jtfNomUsuari;
-    private JTextField  jtfCognomEntrat;
+    private JTextField jtfCognomEntrat;
     private JButton jbAccedir;
     private JLabel jlEtiquetaNomUsuari;
     private JLabel jltitol;
@@ -26,6 +28,50 @@ public class Benvinguda extends JFrame {
     private ButtonGroup bg;
     private JLabel jlEntiguitat;
     private String[] nomsDepartaments = {"Logistica", "Gerencia", "Atencion al cliente"};
+
+
+    private static String[] llegirFitxerCSV(String rutaFitxer) throws IOException {
+        BufferedReader canalLlegir = new BufferedReader(new FileReader(rutaFitxer));
+        String filaLlegida;
+        int liniaLlegida = 0;
+        String[] departaments = new String[10];
+        filaLlegida = canalLlegir.readLine();
+        // Atès que la funció readLine() torna null
+        // quan en llegir obté un caràcter EOF (EndOfFile)
+        // podem dir que si després de la primera lectura
+        // filaLlegida == null, el fitxer és buit!
+        if (filaLlegida == null) {
+            System.out.println("El fitxer és buit!");
+        }
+        // Atès que la funció readLine() torna null
+        // quan en llegir obté un caràcter EOF (EndOfFile)
+        // si la primera lectura no és null
+        // (filaLlegida!=null) significa que hem llegit
+        // una fila del fitxer.
+        while (filaLlegida != null) {
+            // Mostrem per consola el contingut
+            // de la fila llegida.
+            departaments[liniaLlegida] = filaLlegida;
+            liniaLlegida++;
+            // Cal tornar a llegir el fitxer
+            // per obtenir la següent fila.
+            filaLlegida = canalLlegir.readLine();
+        }
+        return departaments;
+    }
+
+
+        public static void main(String[] args) {
+            // Obtenim la ruta del fitxer a llegir
+            String nomFitxer = "resources/nomsDepartaments.csv";
+            try {
+                llegirFitxerCSV(nomFitxer);
+            } catch (IOException e) {
+                System.out.println("ERROR a l'hora de llegir el fitxer!");
+                throw new RuntimeException(e);
+            }
+        }
+
 
 
     public Benvinguda() throws IOException {
@@ -58,6 +104,8 @@ public class Benvinguda extends JFrame {
         jtfNomUsuari = new JTextField(20);
         jlEtiquetaCognomUsuari = new JLabel("cognom:");
         jtfCognomEntrat = new JTextField(20);
+        nomsDepartaments = llegirFitxerCSV("resources/nomsDepartaments.csv");
+
         jcdbdepertament = new JComboBox<String>(nomsDepartaments);
 //        jcdbdepertament .addItem("Logistica");
 //        jcdbdepertament.addItem("Gerencia");
@@ -67,6 +115,8 @@ public class Benvinguda extends JFrame {
         radio1=new JRadioButton("1 any");
         radio2=new JRadioButton("2 anys-6 anys");
         radio3=new JRadioButton("7 anys o +");
+
+
 
 
 
