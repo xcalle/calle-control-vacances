@@ -25,7 +25,7 @@ public class Benvinguda extends JFrame {
     private JRadioButton radio1, radio2, radio3;
     private ButtonGroup bg;
     private JLabel jlEntiguitat;
-    private String[] departaments = {"Logistica", "Gerencia", "Atencion al cliente"};
+    private String[] nomsDepartaments = {"Logistica", "Gerencia", "Atencion al cliente"};
 
 
     public Benvinguda() throws IOException {
@@ -58,14 +58,15 @@ public class Benvinguda extends JFrame {
         jtfNomUsuari = new JTextField(20);
         jlEtiquetaCognomUsuari = new JLabel("cognom:");
         jtfCognomEntrat = new JTextField(20);
-        jcdbdepertament = new JComboBox<String>(departaments);
+        jcdbdepertament = new JComboBox<String>(nomsDepartaments);
 //        jcdbdepertament .addItem("Logistica");
 //        jcdbdepertament.addItem("Gerencia");
 //        jcdbdepertament.addItem("atencion al cliente");
         jlEtiquetaDepertament = new JLabel("Depertament");
+        bg = new ButtonGroup();
         radio1=new JRadioButton("1 any");
-        radio2=new JRadioButton("800*600");
-        radio3=new JRadioButton("1024*768");
+        radio2=new JRadioButton("2 anys-6 anys");
+        radio3=new JRadioButton("7 anys o +");
 
 
 
@@ -85,6 +86,9 @@ public class Benvinguda extends JFrame {
         radio3.setBounds(250,220,100,30);
 
         // Per afegir els components a un panell (panell és una àrea que conté altres components).
+        bg.add(radio1);
+        bg.add(radio2);
+        bg.add(radio3);
         add(jlEtiquetaNomUsuari);
         add(jtfNomUsuari);
         add(jlEtiquetaCognomUsuari);
@@ -121,7 +125,7 @@ public class Benvinguda extends JFrame {
 
                 if (!entradaNomUsuari.isEmpty() && !entradaCognomUsuari.isEmpty() && entradaAntiguitat != 0){
                     // Si l'usuari ha introduït un nom, obrir la finestra "Resultat" amb aquest nom.
-                    new Resultat(entradaNomUsuari, entradaCognomUsuari, entradaDepetament, entradaAntiguitat);
+                    new Resultat(entradaNomUsuari, entradaCognomUsuari, entradaDepetament, entradaAntiguitat, nomsDepartaments);
                 } else {
                     // Si el camp de text és buit, mostrar un missatge d'error.
                     JOptionPane.showMessageDialog(Benvinguda.this,

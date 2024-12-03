@@ -6,7 +6,7 @@ import eines.Eines;  // Importar la classe Eines del paquet eines.
 // Aquesta classe representa la finestra que mostra la salutació personalitzada.
 public class Resultat extends JFrame {
 
-    public Resultat(String entradaNomUsuari, String entradaCognomUsuari, String departament, int entradaAntiguitat) {
+    public Resultat(String entradaNomUsuari, String entradaCognomUsuari, String departament, int entradaAntiguitat, String[] departaments) {
         // Configuració de la finestra
         setTitle("Resultat");
         setSize(300, 150);  // Defineix l'amplada i l'alçada de la finestra.
@@ -18,35 +18,24 @@ public class Resultat extends JFrame {
         JLabel saludo;
         JLabel vacances;
         int dies = 0;
+        int[][] diesVacances = {
+                {6, 14, 20},
+                {7, 15, 22},
+                {10, 20, 30}
+        };
 
 
         // Crear el missatge amb la salutació correcta i el nom de l'usuari.
         saludo = new JLabel(salutacio + entradaNomUsuari + " " + entradaCognomUsuari);
 
-        if (departament == "Atencion al cliente") {
-            if (entradaAntiguitat == 1) {
-                dies = 6;
-            } else if (entradaAntiguitat == 2) {
-                dies = 14;
-            } else if (entradaAntiguitat == 3) {
-                dies = 20;
-            }
-        } else if (departament == "Logistica") {
-            if (entradaAntiguitat == 1) {
-                dies = 10;
-            } else if (entradaAntiguitat == 2) {
-                dies = 20;
-            } else if (entradaAntiguitat == 3) {
-                dies = 20;
+        for (int i = 0; i < departaments.length; i++) {
+            if (departament == departaments[i]){
+                for (int j = 0; j < diesVacances[i].length; j++) {
+                    if (entradaAntiguitat == j+1){
+                        dies = diesVacances[i][j];
+                    }
+                }
 
-            }
-        } else if (departament == "Gerencia") {
-            if (entradaAntiguitat == 1) {
-                dies = 10;
-            } else if (entradaAntiguitat == 2) {
-                dies = 20;
-            } else if (entradaAntiguitat == 3) {
-                dies = 20;
             }
         }
         vacances = new JLabel("Et pertanyen " + dies + " dies de vacances");
