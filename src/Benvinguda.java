@@ -29,12 +29,28 @@ public class Benvinguda extends JFrame {
     private JLabel jlEntiguitat;
     private String[] nomsDepartaments = {"Logistica", "Gerencia", "Atencion al cliente"};
 
+    private static int comptarLinies(String rutaFitxer) throws IOException {
+        BufferedReader canalLlegir = new BufferedReader(new FileReader(rutaFitxer));
+        String filaLlegida;
+        int lineaLlegida = 0;
+
+        filaLlegida = canalLlegir.readLine();
+        if (filaLlegida == null) {
+            System.out.println("El fitxer és buit!");
+        }
+        while (filaLlegida != null) {
+            lineaLlegida++;
+            filaLlegida = canalLlegir.readLine();
+        }
+        return lineaLlegida;
+    }
 
     private static String[] llegirFitxerCSV(String rutaFitxer) throws IOException {
         BufferedReader canalLlegir = new BufferedReader(new FileReader(rutaFitxer));
         String filaLlegida;
+        int midaVector = comptarLinies(rutaFitxer);
         int liniaLlegida = 0;
-        String[] departaments = new String[10];
+        String[] departaments = new String[midaVector];
         filaLlegida = canalLlegir.readLine();
         // Atès que la funció readLine() torna null
         // quan en llegir obté un caràcter EOF (EndOfFile)
@@ -61,16 +77,7 @@ public class Benvinguda extends JFrame {
     }
 
 
-        public static void main(String[] args) {
-            // Obtenim la ruta del fitxer a llegir
-            String nomFitxer = "resources/nomsDepartaments.csv";
-            try {
-                llegirFitxerCSV(nomFitxer);
-            } catch (IOException e) {
-                System.out.println("ERROR a l'hora de llegir el fitxer!");
-                throw new RuntimeException(e);
-            }
-        }
+
 
 
 
