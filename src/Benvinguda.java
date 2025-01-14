@@ -12,6 +12,7 @@ public class Benvinguda extends JFrame {
     public static final int ALSSADA = 400;
     public static final String TITOL_FINESTRA = "Benvingut";
 
+    private String[][] diesVacances;
     private JTextField jtfNomUsuari;
     private JTextField jtfCognomEntrat;
     private JButton jbAccedir;
@@ -50,7 +51,42 @@ public class Benvinguda extends JFrame {
         String filaLlegida;
         int midaVector = comptarLinies(rutaFitxer);
         int liniaLlegida = 0;
+        String[] filaTallada;
         String[] departaments = new String[midaVector];
+        filaLlegida = canalLlegir.readLine();
+        // Atès que la funció readLine() torna null
+        // quan en llegir obté un caràcter EOF (EndOfFile)
+        // podem dir que si després de la primera lectura
+        // filaLlegida == null, el fitxer és buit!
+        if (filaLlegida == null) {
+            System.out.println("El fitxer és buit!");
+        }
+        // Atès que la funció readLine() torna null
+        // quan en llegir obté un caràcter EOF (EndOfFile)
+        // si la primera lectura no és null
+        // (filaLlegida!=null) significa que hem llegit
+        // una fila del fitxer.
+        while (filaLlegida != null) {
+            filaTallada = filaLlegida.split(",");
+            // Mostrem per consola el contingut
+            // de la fila llegida.
+            departaments[liniaLlegida] = filaTallada[0];
+            liniaLlegida++;
+            // Cal tornar a llegir el fitxer
+            // per obtenir la següent fila.
+            filaLlegida = canalLlegir.readLine();
+        }
+        return departaments;
+    }
+
+
+    private static String[][] llegirFitxerCSV2(String rutaFitxer) throws IOException {
+        int midaVector = comptarLinies(rutaFitxer);
+        BufferedReader canalLlegir = new BufferedReader(new FileReader(rutaFitxer));
+        String filaLlegida;
+        String[] filaTallada;
+        int lineaLlegida = 0;
+        String[][] diesVacances = new String[midaVector][3];
         filaLlegida = canalLlegir.readLine();
         // Atès que la funció readLine() torna null
         // quan en llegir obté un caràcter EOF (EndOfFile)
@@ -67,13 +103,17 @@ public class Benvinguda extends JFrame {
         while (filaLlegida != null) {
             // Mostrem per consola el contingut
             // de la fila llegida.
-            departaments[liniaLlegida] = filaLlegida;
-            liniaLlegida++;
+            filaTallada = filaLlegida.split(",");
+
+            diesVacances[lineaLlegida][0] = filaTallada[1];
+            diesVacances[lineaLlegida][1] = filaTallada[2];
+            diesVacances[lineaLlegida][2] = filaTallada[3];
+            lineaLlegida++;
             // Cal tornar a llegir el fitxer
             // per obtenir la següent fila.
             filaLlegida = canalLlegir.readLine();
         }
-        return departaments;
+        return diesVacances;
     }
 
 
@@ -112,6 +152,8 @@ public class Benvinguda extends JFrame {
         jlEtiquetaCognomUsuari = new JLabel("cognom:");
         jtfCognomEntrat = new JTextField(20);
         nomsDepartaments = llegirFitxerCSV("resources/nomsDepartaments.csv");
+        diesVacances = llegirFitxerCSV2("resources/nomsDepartaments.csv");
+
 
         jcdbdepertament = new JComboBox<String>(nomsDepartaments);
 //        jcdbdepertament .addItem("Logistica");
@@ -182,7 +224,7 @@ public class Benvinguda extends JFrame {
 
                 if (!entradaNomUsuari.isEmpty() && !entradaCognomUsuari.isEmpty() && entradaAntiguitat != 0){
                     // Si l'usuari ha introduït un nom, obrir la finestra "Resultat" amb aquest nom.
-                    new Resultat(entradaNomUsuari, entradaCognomUsuari, entradaDepetament, entradaAntiguitat, nomsDepartaments);
+                    new Resultat(entradaNomUsuari, entradaCognomUsuari, entradaDepetament, entradaAntiguitat, nomsDepartaments, diesVacances);
                 } else {
                     // Si el camp de text és buit, mostrar un missatge d'error.
                     JOptionPane.showMessageDialog(Benvinguda.this,

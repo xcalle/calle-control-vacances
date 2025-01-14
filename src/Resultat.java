@@ -6,7 +6,7 @@ import eines.Eines;  // Importar la classe Eines del paquet eines.
 // Aquesta classe representa la finestra que mostra la salutació personalitzada.
 public class Resultat extends JFrame {
 
-    public Resultat(String entradaNomUsuari, String entradaCognomUsuari, String departament, int entradaAntiguitat, String[] departaments) {
+    public Resultat(String entradaNomUsuari, String entradaCognomUsuari, String departament, int entradaAntiguitat, String[] departaments, String[][] diesVacancesFitxer){
         // Configuració de la finestra
         setTitle("Resultat");
         setSize(300, 150);  // Defineix l'amplada i l'alçada de la finestra.
@@ -17,12 +17,8 @@ public class Resultat extends JFrame {
         String salutacio = Eines.obtenirSalutacio();
         JLabel saludo;
         JLabel vacances;
-        int dies = 0;
-        int[][] diesVacances = {
-                {6, 14, 20},
-                {7, 15, 22},
-                {10, 20, 30}
-        };
+        String dies = "";
+        String[][] diesVacances = diesVacancesFitxer;
 
 
         // Crear el missatge amb la salutació correcta i el nom de l'usuari.
