@@ -1,11 +1,24 @@
 import javax.swing.*;
+import java.io.*;
 import java.time.LocalTime;
 
 import eines.Eines;  // Importar la classe Eines del paquet eines.
 
 // Aquesta classe representa la finestra que mostra la salutació personalitzada.
 public class Resultat extends JFrame {
+    private void guardarConsulta(String rutaFitxer, String nom, String cognom, String departament, int antiguitat, String dies){
+        try
+        {
+            BufferedWriter canalEscriure = new BufferedWriter(new FileWriter(rutaFitxer,true));
+            canalEscriure.write(nom+","+cognom+","+departament+","+antiguitat+","+dies+"\r\n");
+            canalEscriure.close();
+        }
+        catch (IOException except)
+        {
+            except.printStackTrace();
+        }
 
+    }
     public Resultat(String entradaNomUsuari, String entradaCognomUsuari, String departament, int entradaAntiguitat, String[] departaments, String[][] diesVacancesFitxer){
         // Configuració de la finestra
         setTitle("Resultat");
@@ -19,6 +32,9 @@ public class Resultat extends JFrame {
         JLabel vacances;
         String dies = "";
         String[][] diesVacances = diesVacancesFitxer;
+
+
+
 
 
         // Crear el missatge amb la salutació correcta i el nom de l'usuari.
@@ -35,6 +51,8 @@ public class Resultat extends JFrame {
             }
         }
         vacances = new JLabel("Et pertanyen " + dies + " dies de vacances");
+        guardarConsulta("resources/consulta.csv", entradaNomUsuari, entradaCognomUsuari, departament, entradaAntiguitat, dies);
+
 
         saludo.setBounds(20, 20, 300, 30);
         vacances.setBounds(20, 40, 200, 30);
@@ -44,5 +62,4 @@ public class Resultat extends JFrame {
         setVisible(true);
     }
 }
-
 
